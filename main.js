@@ -6,5 +6,6 @@ var app = new Vue({
     product: 'Socks',
     image: './assets/vmSocks-green.jpg',
     inStock: true,
+    onSale: true,
   }
 })
