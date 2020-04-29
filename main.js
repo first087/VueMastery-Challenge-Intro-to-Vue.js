@@ -20,11 +20,8 @@ Vue.component('product', {
             <h1>{{ product }}</h1>
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
-            <p>Shipping: {{ shipping }}</p>
 
-            <ul>
-              <li v-for="detail in details">{{ detail }}</li>
-            </ul>
+            <info-tabs :shipping="shipping" :details="details"></info-tabs>
 
             <div class="color-box"
                  v-for="(variant, index) in variants" 
@@ -204,6 +201,49 @@ Vue.component('product-tabs', {
     return {
       tabs: ['Reviews', 'Make a Review'],
       selectedTab: 'Reviews'
+    }
+  }
+})
+
+Vue.component('info-tabs', {
+  props: {
+    shipping: {
+      type: String,
+      required: true,
+    },
+    details: {
+      type: Array,
+      required: true,
+    }
+  },
+  template: `
+    <div>
+
+      <ul>
+        <span class="tabs" 
+              :class="{ activeTab: selectedTab === tab }"
+              v-for="(tab, index) in tabs"
+              @click="selectedTab = tab"
+              :key="tab"
+        >{{ tab }}</span>
+      </ul>
+
+      <div v-show="selectedTab === 'Shipping'">
+        <p>{{ shipping }}</p>
+      </div>
+
+      <div v-show="selectedTab === 'Details'">
+        <ul>
+          <li v-for="detail in details">{{ detail }}</li>
+        </ul>
+      </div>
+
+    </div>
+  `,
+  data() {
+    return {
+      tabs: ['Shipping', 'Details'],
+      selectedTab: 'Shipping',
     }
   }
 })
